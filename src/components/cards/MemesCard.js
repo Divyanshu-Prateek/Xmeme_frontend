@@ -76,7 +76,7 @@ export const MemesCard = ({meme,index,editButtonPress,delButtonPress,incCount,de
             <label htmlFor='caption'>Caption:</label>
             <input type="text" name="caption"placeholder={meme.caption} onChange={onChangeEdit}/>
             <label htmlFor="url" >URL:</label>
-            <input type="text" name="url" placeholder={meme.url} value={editMeme.url} onChange={onChangeEdit}/>
+            <input type="text" name="url" placeholder={meme.url} onChange={onChangeEdit}/>
             <div style={{margin:'0.5rem'}}>
             <Button variant="primary" onClick={(e)=>{ console.log(e); handleClose();onPatchMeme();}}>Submit</Button>
             <Button variant="danger" onClick={handleClose}>

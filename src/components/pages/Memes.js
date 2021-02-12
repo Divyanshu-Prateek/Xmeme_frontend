@@ -1,6 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import MemesList from '../cards/MemesList'
 import axios from 'axios';
+import emptyPageGif from '../../static/images/LoadingWebPage.jpg';
+import spinner from '../../static/images/spinner1.jpg';
+
+
+let URL =`http://localhost:8081`;   // local sandbox
+URL = `https://xmeme-prateek-divyanshu.herokuapp.com` // deployed version
 
 class Memes extends Component {
   constructor(props){
@@ -30,11 +36,11 @@ class Memes extends Component {
     const order=this.state.order;
     const skip=this.state.skip;
     const take=this.state.take;
-    let reqApi = `http://localhost:8081/api/memes/display?sortBy=${sortBy}&order=${order}&skip=${skip}&take=${take}`;
+    let reqApi = URL+`/api/memes/display?sortBy=${sortBy}&order=${order}&skip=${skip}&take=${take}`;
 
     return axios.get(reqApi)
               .then((res)=>{console.log(res.data.data); this.setState({loading:false,memes:res.data.data})})
-              .catch((err)=>console.log(err.message))
+              .catch((err)=>{this.setState({loading:false});console.log(err.message)})
     // const res = await axios.get('http://localhost:8081/memes');
     // console.log(res);
     // this.setState({loading:false,memes:res.data.data});
@@ -50,6 +56,11 @@ class Memes extends Component {
    delButtonPress =(meme) =>{
     console.log('Delete Meme' +meme.id);
     this.setState({memes: [...this.state.memes.filter((memeData)=> memeData!=meme)]});
+    if(this.props.memes.length==1){
+      this.setState({loading:false})
+    }
+    this.props.delButtonPress(meme);
+    // this.props.hotReload.bind(this);
   }
 
   render() {
@@ -82,19 +93,39 @@ class Memes extends Component {
                 <option value="desc">Descending</option>
                 <option value="asc">Ascending</option>
               </select>
-              <input type='submit' value='Submit' className='btn' style={submitStyle}/>
+              <input type='submit' value='Submit' className='btn' style={submitStyle} disabled={this.props.memes.length==0}/>
               </form>
               </section>
             </Fragment>
             </b>
         </section>
-        <div className="container" style={{border:'0.25rem dashed #ccc',marginTop:'1rem'}}>
-        <div style={{textAlign:'center'}}><h3>Filtered Memes</h3></div>
-          <MemesList memes={this.state.memes} loading={this.state.loading} 
-          editButtonPress ={this.props.editButtonPress}
-          delButtonPress ={this.delButtonPress}
-          />
-        </div>
+        {this.state.loading==true ?
+             (<div className='container' style={{display:'grid',gridTemplateColumns:'[first] 1fr [second] 0.75fr [third] 1fr [fourth]'}}><img src={spinner} alt='Loading....' style={{width:'20rem',height:'20rem',gridColumnStart:'second',gridColumnEnd:'third'}}></img></div>) :
+             (  
+      
+        this.props.memes.length==0 ? 
+           (<div style={{display:'grid',gridTemplateColumns:'[first] 1fr [second] 1.75fr [third] 1fr'}}>
+           <p style={{textAlign:'center',gridColumnStart:'second',gridColumnEnd:'third'}}>
+             No memes to show</p>
+           <p style={{textAlign:'center',gridColumnStart:'second',gridColumnEnd:'third'}}>
+             Click on the Add Meme button to upload memes
+           </p>
+           <img src={emptyPageGif} style={{padding:'2rem',width:'20rem',height:'20rem',maxWidth:'100%',gridColumnStart:'second',gridColumnEnd:'third'}}>
+           </img>
+         </div>)  :
+         (
+         <div className="container" style={{border:'0.25rem dashed #ccc',marginTop:'1rem'}}>
+         <div style={{textAlign:'center'}}><h3>Filtered Memes</h3></div>
+          {this.state.memes.length==0 && <div style={{textAlign:'center'}}>No, such memes present</div>}
+           <MemesList memes={this.state.memes} loading={this.state.loading} 
+           editButtonPress ={this.props.editButtonPress}
+           delButtonPress ={this.delButtonPress}
+           />
+         </div>
+         )
+        
+        )
+        }
         
       </Fragment>
     )

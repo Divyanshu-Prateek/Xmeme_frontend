@@ -1,8 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import MemesList from '../cards/MemesList';
-import {Button} from 'react-bootstrap';
+import {Button,Alert} from 'react-bootstrap';
 import MemePreview from '../cards/MemePreview';
 import Pagination from '../layouts/Pagination';
+import spinner from '../../static/images/spinner1.jpg';
+import emptyPageGif from '../../static/images/LoadingWebPage.jpg';
+
+// Not done frontend url Match because many facebook and google images are not accepted as a url format
+// const urlMatch='((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)'
+
 
 export class AddMeme extends Component {
   state={
@@ -14,11 +20,7 @@ export class AddMeme extends Component {
     // showMeme:[],
     // currentPage:1,
   }
-  // componentDidMount(){
-  //   let arr=[];
-  //   for(let i=0;i<Math.min(this.props.memes.length,5);i++) arr.push(this.props.memes[i]);
-  //   this.setState({showMeme:arr})
-  // }
+  
   onChange =(e) =>{
     this.setState({[e.target.name]: e.target.value});
   }
@@ -54,6 +56,7 @@ export class AddMeme extends Component {
         {this.state.showAddMeme==false && <Button variant="outline-dark" onClick={this.toggleShowAddMeme} style={{margin:'0.5rem'}}>Add Meme</Button>}
         {this.state.showAddMeme==true && <Button variant="outline-danger" onClick={this.toggleShowAddMeme} style={{margin:'0.5rem'}}>Close X</Button>}
         </div>
+        
         {this.state.showAddMeme && <section className='container' style={{backgroundColor:'whitesmoke',border:'black 0.25rem dotted'}}>
         <div style={{textAlign:'center',backgroundColor:'whitesmoke'}}><b><h2>Add Memes</h2></b></div>
       <form onSubmit={this.onSubmit} style={formStyle}>
@@ -63,19 +66,25 @@ export class AddMeme extends Component {
         
         <input type="text" name="name" style={inputStyle} 
           value={this.state.name} 
-          onChange={this.onChange}/>
+          onChange={this.onChange}
+          required={true}
+          />
         <div style={labelDivStyle}>
         <label htmlFor="caption"  style={{textAlign:'center'}} ><h4>Caption:</h4></label>
         </div>
         <input type='text' name='caption'  style={inputStyle}
            value={this.state.caption}
-           onChange={this.onChange}/>
+           onChange={this.onChange}
+           required={true}
+           />
         <div style={labelDivStyle}>
         <label htmlFor="url"  style={{textAlign:'center'} }><h4>URL:</h4></label>
         </div>
         <input type ='text' name='url'  style={inputStyle}
           value={this.state.url}
-          onChange={this.onChange}/>
+          onChange={this.onChange}
+          required={true}
+          />
         <input type='submit' value='Submit' className='btn' style={submitStyle}/>
       </form>
        {this.state.name!='' && this.state.caption!='' &&
@@ -88,13 +97,30 @@ export class AddMeme extends Component {
             />
         }
       </section>}
-        
-      <div className="container" style={{border:'0.25rem dashed #ccc',marginTop:'1rem'}}>
-        <div style={{textAlign:'center'}}><h3>Latest Memes</h3></div>
-      <MemesList memes={memes} loading={loading} 
-          editButtonPress ={this.props.editButtonPress}
-          delButtonPress ={this.props.delButtonPress}/>
-      </div>
+      {this.props.memes.length==0 ? 
+        (<div style={{display:'grid',gridTemplateColumns:'[first] 1fr [second] 1.75fr [third] 1fr'}}>
+          <p style={{textAlign:'center',gridColumnStart:'second',gridColumnEnd:'third'}}>
+            No memes to show</p>
+          <p style={{textAlign:'center',gridColumnStart:'second',gridColumnEnd:'third'}}>
+            Click on the Add Meme button to upload memes
+          </p>
+          <img src={emptyPageGif} style={{padding:'2rem',width:'20rem',height:'20rem',maxWidth:'100%',gridColumnStart:'second',gridColumnEnd:'third'}}>
+          </img>
+        </div>) : 
+        (<div className="container" style={{border:'0.25rem dashed #ccc',marginTop:'1rem'}}>
+        {(this.props.memes.length==0&&this.props.loading)?
+              (<div className='container' style={{display:'grid',gridTemplateColumns:'[first] 1fr [second] 0.75fr [third] 1fr [fourth]'}}><img src={spinner} alt='Loading....' style={{width:'20rem',height:'20rem',gridColumnStart:'second',gridColumnEnd:'third'}}></img></div>)
+            :
+              (<div>
+                <div style={{textAlign:'center'}}><h3>Latest Memes</h3></div>
+                  <MemesList memes={memes} loading={loading} 
+                    editButtonPress ={this.props.editButtonPress}
+                    delButtonPress ={this.props.delButtonPress}/>
+                </div>)
+          }
+        </div>)
+        }
+      
       {/* <Pagination 
         isHome={true} 
         currentPage={this.state.currentPage} 
