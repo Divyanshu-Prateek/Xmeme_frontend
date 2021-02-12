@@ -151,12 +151,7 @@ class App extends Component {
    setTimeout(this.closeAlert.bind(this),5000);
  }
 
- // Hot reload if a meme is deleted on one page updating the other page 
- hotReload(){
-   this.getAllMemes();
-   this.setState({reload:false});
- }
-
+ 
   render() {
     return (
       <Router>
@@ -183,7 +178,7 @@ class App extends Component {
               editButtonPress={this.editButtonPress}
               delButtonPress ={this.delButtonPress}
               alert={this.state.alert}
-              hotReload={this.hotReload}
+              // hotReload={this.hotReload}
             />)}  />
             <Route render ={Error404}/>
           </Switch>
