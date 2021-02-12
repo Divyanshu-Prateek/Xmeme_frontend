@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom';
+import {Button} from 'react-bootstrap';
 
 const Navbar = ({getAllMemes}) => {
   return (
@@ -18,7 +19,9 @@ const Navbar = ({getAllMemes}) => {
           <Link to="/about" style={{fontSize: '1.25rem'}}>About</Link>
         </li>
         <li>
-          <Link to='/swagger' style={{fontSize:'1.25rem'}}>Swagger</Link>
+          <a href="https://xmeme-prateek-divyanshu.herokuapp.com/swagger-ui/">
+          <Button variant="success">Swagger</Button>
+          </a>
         </li>
         
       </ul>

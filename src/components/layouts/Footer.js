@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import {Link} from 'react-router-dom';
+import {Button} from 'react-bootstrap'
 
 const Footer = () => {
   return (
@@ -15,12 +16,16 @@ const Footer = () => {
         <div style={{gridColumnStart:'second',gridColumnEnd:'third',gridRowStart:'firstRow',gridRowEnd:'secondRow'}}><Link to='/about'>About</Link></div>
         </h3>
         <h3>
-        <div style={{gridColumnStart:'second',gridColumnEnd:'third',gridRowStart:'secondRow',gridRowEnd:'thirdRow'}}><Link to='/about'>Swagger</Link></div>
+        <div style={{gridColumnStart:'second',gridColumnEnd:'third',gridRowStart:'secondRow',gridRowEnd:'thirdRow'}}><a href="https://xmeme-prateek-divyanshu.herokuapp.com/swagger-ui/">
+          Swagger
+          </a></div>
         </h3>
         <div style={{gridColumnStart:'first',gridColumnEnd:'third',gridRowStart:'thirdRow',gridRowEnd:'fourthRow',textAlign: 'center'}}>
           <p><b>Xmeme ©2021</b></p>
           <p><b>All Rights Reserved by Prateek Divyanshu</b></p>
-          <p><Link to='/'>Contact Me</Link></p>
+          <p>
+            <a href="mailto:prateek10023@gmail.com">Contact Me</a>
+            </p>
         </div>
       </div>
     </Fragment>

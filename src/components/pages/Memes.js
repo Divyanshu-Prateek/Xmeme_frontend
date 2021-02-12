@@ -77,7 +77,7 @@ class Memes extends Component {
                 <div style={labelDivStyle}>
                   <label htmlFor='searchMeme'><h4>Search: </h4></label>
                 </div>
-              <input type="text" name='searchMeme' placeholder='Meme Search goes here...' style={inputStyle} onChange={this.onChange}/>
+              <input type="text" name='searchMeme' placeholder='(available in next version)' style={inputStyle} onChange={this.onChange} disabled={true}/>
               <div style={labelDivStyle}>
                 <label htmlFor='sorBy'><h4>Sort By: </h4></label>
               </div>

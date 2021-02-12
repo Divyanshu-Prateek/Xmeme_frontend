@@ -9,7 +9,9 @@ const About = () => {
         <p>Xmeme is a fullstack application which is used to submit different memes by users all over the world</p>
       <p>Version: 0.0.1</p>
         <p style={{}}>
-          <Button variant="primary">GitHub Docs</Button>
+        <a href="https://xmeme-prateek-divyanshu.herokuapp.com/swagger-ui/">
+          <Button variant="success">Swagger</Button>
+          </a>
         </p> 
       </Jumbotron>
       <h3>Made by- Prateek Divyanshu</h3>
