@@ -10,7 +10,7 @@ const Footer = () => {
         <div style={{gridColumnStart:'first',gridColumnEnd:'second',gridRowStart:'firstRow',gridRowEnd:'secondRow'}}><Link to='/'>Home</Link></div>
         </h3>
         <h3>
-        <div style={{gridColumnStart:'first',gridColumnEnd:'second',gridRowStart:'secondRow',gridRowEnd:'thirdRow'}}><Link to='/'>Memes</Link></div>
+        <div style={{gridColumnStart:'first',gridColumnEnd:'second',gridRowStart:'secondRow',gridRowEnd:'thirdRow'}}><Link to='/memes'>Memes</Link></div>
         </h3>
         <h3>
         <div style={{gridColumnStart:'second',gridColumnEnd:'third',gridRowStart:'firstRow',gridRowEnd:'secondRow'}}><Link to='/about'>About</Link></div>
